@@ -22,7 +22,6 @@ export async function GET(request:NextRequest){
 export async function DELETE(request:NextRequest) {
   const id = request.nextUrl.searchParams.get("id");
 
-  console.log(id)
   await connect();
   try {
     const res=await todo.findByIdAndDelete(id);

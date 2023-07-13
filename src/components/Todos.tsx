@@ -17,44 +17,48 @@ interface Task {
 
 const Todos = () => {
   const [allTask, setAllTask] = useState<Task[]>([]);
+  const [isLoading,setLoading] =useState(false)
   const [allTaskfilter, setAllTaskfilter] = useState<Task[]>([]);
   useEffect(() => {
     getAllTask();
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => { }, [allTaskfilter]);
 
-  },[allTaskfilter])
+  const filterALL = () => {
+    setAllTaskfilter(allTask);
+  };
 
-  const filterALL=()=>{
-    setAllTaskfilter(allTask)
-  }
-
-  const filterComplete=()=>{
-    setAllTaskfilter([])
-    const data =allTask.filter(x=>x.isCompleted)
-    setAllTaskfilter(data)
-  }
-  const filterInprogress=()=>{
-    setAllTaskfilter([])
-    const data =allTask.filter(x=>x.isInprogress)
-    setAllTaskfilter(data)
-  }
-  const filterYetTodo=()=>{
-    setAllTaskfilter([])
-    const data =allTask.filter(x=>x.isTodo)
-    setAllTaskfilter(data)
-    console.log(data)
-  }
+  const filterComplete = () => {
+    setAllTaskfilter([]);
+    const data = allTask.filter((x) => x.isCompleted);
+    setAllTaskfilter(data);
+  };
+  const filterInprogress = () => {
+    setAllTaskfilter([]);
+    const data = allTask.filter((x) => x.isInprogress);
+    setAllTaskfilter(data);
+  };
+  const filterYetTodo = () => {
+    setAllTaskfilter([]);
+    const data = allTask.filter((x) => x.isTodo);
+    setAllTaskfilter(data);
+    console.log(data);
+  };
 
   const getAllTask = async () => {
     try {
+      setLoading(false)
       const response = await axios.get<Task[]>("/api/todos");
       setAllTask(response.data);
-      setAllTaskfilter(response.data)
+      setAllTaskfilter(response.data);
+
       console.log("Tasks fetched successfully:");
     } catch (error) {
       console.log("Something went wrong:", error);
+    }
+    finally{
+      setLoading(true)
     }
   };
 
@@ -65,16 +69,44 @@ const Todos = () => {
       </h1>
       <div className="flex h-5 mx-auto bg-cyan-100 justify-around p-2 m-1 min-w-[600px] text-xl border-2 min-h-[5rem] mt-5">
         <div className="h-6 text-sm px-3 py-1 my-auto bg-gray-200 rounded-md   ">
-          <button className="h-full  font-bold " onClick={()=>{filterALL()}}>All</button>
+          <button
+            className="h-full  font-bold "
+            onClick={() => {
+              filterALL();
+            }}
+          >
+            All
+          </button>
         </div>
         <div className="h-6 text-sm px-3 py-1 my-auto bg-red-200 rounded-md  ">
-          <button className="h-full  font-bold" onClick={()=>{filterYetTodo()}}>Todo</button>
+          <button
+            className="h-full  font-bold"
+            onClick={() => {
+              filterYetTodo();
+            }}
+          >
+            Todo
+          </button>
         </div>
         <div className="h-6 text-sm px-3 py-1 my-auto bg-orange-200 rounded-md ">
-          <button className="h-full  font-bold" onClick={()=>{filterInprogress()}}>In progress</button>
+          <button
+            className="h-full  font-bold"
+            onClick={() => {
+              filterInprogress();
+            }}
+          >
+            In progress
+          </button>
         </div>
         <div className="h-6 text-sm px-3 py-1 my-auto bg-green-400 rounded-md  ">
-          <button className="h-full  font-bold" onClick={()=>{filterComplete()}}>Completed</button>
+          <button
+            className="h-full  font-bold"
+            onClick={() => {
+              filterComplete();
+            }}
+          >
+            Completed
+          </button>
         </div>
         <div className="bg-green-700 rounded-lg h-12 my-auto p-1">
           <Link href={"/addtodo"}>
@@ -85,29 +117,28 @@ const Todos = () => {
         </div>
       </div>
 
-      {
-      allTaskfilter.length>0
-      ?
-      allTaskfilter.map((data: Task) => {
-        const { _id, title, description, isCompleted, isInprogress, isTodo } =
-          data;
-        const id = String(_id);
-        return (
-          <AllTask
-            key={_id}
-            id={id}
-            title={title}
-            description={description}
-            isCompleted={isCompleted}
-            isInprogress={isInprogress}
-            isTodo={isTodo}
-          />
-        );
-      })
-    :
-    <div className="mt-10 flex justify-center p-10 bg-red-400 text-white shadow border min-w-[600px] text-lg font-bold">No task is Found in database   ?</div>
-    }
-      
+      {allTaskfilter.length > 0 ? (
+        allTaskfilter.map((data: Task) => {
+          const { _id, title, description, isCompleted, isInprogress, isTodo } =
+            data;
+          const id = String(_id);
+          return (
+            <AllTask
+              key={_id}
+              id={id}
+              title={title}
+              description={description}
+              isCompleted={isCompleted}
+              isInprogress={isInprogress}
+              isTodo={isTodo}
+            />
+          );
+        })
+          ) : (
+        <div className="mt-10 flex justify-center p-10 bg-red-400 text-white shadow border min-w-[600px] text-lg font-bold">
+         { isLoading?"No task is Found in database ?":"Loading...."}
+        </div>
+      )}
     </main>
   );
 };
