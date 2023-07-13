@@ -8,7 +8,6 @@ connect();
 export async function GET(request: NextRequest,  { params }: { params: { id: string } }) {
   const { id } = params;
   await connect();
-  console.log(id)
   try {
     const task = await todo.findOne({ _id: id });
     console.log(task)
