@@ -1,9 +1,12 @@
-import Image from 'next/image'
+"use client"
+import Todos from "@/components/Todos";
 
 export default function Home() {
+
+
+
+  
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-     <h1 className='font-bold text-2xl underline'>Task Management Application</h1>
-    </main>
-  )
+    <Todos/>
+  );
 }
