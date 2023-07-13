@@ -135,7 +135,7 @@ const Todos = () => {
           );
         })
           ) : (
-        <div className="mt-10 flex justify-center p-10 bg-red-400 text-white shadow border min-w-[600px] text-lg font-bold">
+        <div className="mt-10 flex justify-center p-10 bg-red-300 text-white shadow border min-w-[600px] text-lg font-bold">
          { isLoading?"No task is Found in database ?":"Loading...."}
         </div>
       )}
