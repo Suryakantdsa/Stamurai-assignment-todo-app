@@ -2,12 +2,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connect } from "@/dbconfig/dbConfig";
 import todo from "@/models/todoModel";
-// import cors from "@/middleware/cors";
 
+connect();
 
 export async function GET(request: NextRequest,  { params }: { params: { id: string } }) {
   const { id } = params;
   await connect();
+  console.log(id)
   try {
     const task = await todo.findOne({ _id: id });
     console.log(task)
@@ -20,11 +21,10 @@ export async function GET(request: NextRequest,  { params }: { params: { id: str
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
-export async function PUT(request: NextRequest, response:NextResponse ,next: NextResponse,{ params }: { params: { id: string } }) {
-  
+export async function PUT(request: NextRequest,  { params }: { params: { id: string } }) {
   const { id } = params;
   await connect();
- 
+
   try {
     const reqBody = await request.json();
     const { title, description } = reqBody;
