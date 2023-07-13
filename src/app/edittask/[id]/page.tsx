@@ -44,7 +44,7 @@ const UpdateTask = ({ params }: any) => {
 
   const handleUpdateTodo = async () => {
     try {
-      const response = await axios.put(`/api/edittask/${params.id}`, todos);
+      const response = await axios.put(`/edittask/${params.id}`, todos);
 
       toast.success("Task updated successfully");
       router.push("/");
