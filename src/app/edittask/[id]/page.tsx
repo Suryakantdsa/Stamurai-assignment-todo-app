@@ -30,7 +30,7 @@ const UpdateTask = ({ params }: any) => {
   const getOldData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/edittask/${params.id}`
+        `https://stamurai-assignment-todo-app.vercel.app/api/edittask/${params.id}`
       );
       if (response.data && response.data.task) {
         const task = response.data.task;
