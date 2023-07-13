@@ -44,17 +44,14 @@ const UpdateTask = ({ params }: any) => {
 
   const handleUpdateTodo = async () => {
     try {
-      const response = await axios.put(
-        `/api/edittask/${params.id}`,
-        todos
-      );
+      const response = await axios.put(`/api/edittask/${params.id}`, todos);
+
       toast.success("Task updated successfully");
       router.push("/");
     } catch (error) {
       console.log("Something went wrong", error);
     }
   };
-  
 
   return (
     <div className="flex justify-center">

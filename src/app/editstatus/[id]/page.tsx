@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 
 const ChangeStatus = ({ params }: any) => {
+  const [isLoading, setLoading] = useState(false);
   const router = useRouter();
   const closePopup = () => {
     router.push("/");
@@ -21,10 +22,7 @@ const ChangeStatus = ({ params }: any) => {
     }
     console.log("Selected status:", status);
     try {
-      const response = await axios.put(
-        `/api/editstatus/${params.id}`,
-        payload
-      );
+      const response = await axios.put(`/api/editstatus/${params.id}`, payload);
       toast.success("Status Changed successfully");
       router.push("/");
     } catch (error) {
@@ -37,6 +35,9 @@ const ChangeStatus = ({ params }: any) => {
       {
         <div className="fixed inset-0 flex items-center justify-center">
           <div className="bg-white rounded p-4 shadow-lg">
+            {isLoading && (
+              <h1 className="text-center text-lg ">Processing ......</h1>
+            )}
             <h3 className="text-lg font-bold mb-4">Change Status</h3>
             <div className="flex space-x-4">
               <button
