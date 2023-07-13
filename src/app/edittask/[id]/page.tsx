@@ -42,30 +42,11 @@ const UpdateTask = ({ params }: any) => {
     }
   };
 
-  // const handleUpdateTodo = async () => {
-  //   try {
-  //     const response = await axios.put(
-  //       `http://localhost:3000/api/edittask/${params.id}`,
-  //       todos
-  //     );
-  //     toast.success("Task updated successfully");
-  //     router.push("/");
-  //   } catch (error) {
-  //     console.log("Something went wrong", error);
-  //   }
-  // };
   const handleUpdateTodo = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/api/edittask/${params.id}`,
-        todos,
-        {
-          headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-          },
-        }
+        `/api/edittask/${params.id}`,
+        todos
       );
       toast.success("Task updated successfully");
       router.push("/");
