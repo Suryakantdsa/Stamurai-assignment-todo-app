@@ -29,7 +29,7 @@ const UpdateTask = ({ params }: any) => {
 
   const getOldData = async () => {
     try {
-      const response = await axios.get(`https://stamurai-assignment-todo-app-tc22.vercel.app/api/edittask/${params.id}`);
+      const response = await axios.get(`/api/edittask/${params.id}`);
       if (response.data && response.data.task) {
         const task = response.data.task;
         setTodo({
@@ -42,11 +42,30 @@ const UpdateTask = ({ params }: any) => {
     }
   };
 
+  // const handleUpdateTodo = async () => {
+  //   try {
+  //     const response = await axios.put(
+  //       `http://localhost:3000/api/edittask/${params.id}`,
+  //       todos
+  //     );
+  //     toast.success("Task updated successfully");
+  //     router.push("/");
+  //   } catch (error) {
+  //     console.log("Something went wrong", error);
+  //   }
+  // };
   const handleUpdateTodo = async () => {
     try {
       const response = await axios.put(
         `http://localhost:3000/api/edittask/${params.id}`,
-        todos
+        todos,
+        {
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+          },
+        }
       );
       toast.success("Task updated successfully");
       router.push("/");
@@ -54,6 +73,7 @@ const UpdateTask = ({ params }: any) => {
       console.log("Something went wrong", error);
     }
   };
+  
 
   return (
     <div className="flex justify-center">

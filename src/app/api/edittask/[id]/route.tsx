@@ -2,12 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connect } from "@/dbconfig/dbConfig";
 import todo from "@/models/todoModel";
-import Cors from "cors";
-
-const cors = Cors({
-  origin: 'https://stamurai-assignment-todo-app-tc22.vercel.app',
-});
-
+// import cors from "@/middleware/cors";
 
 
 export async function GET(request: NextRequest,  { params }: { params: { id: string } }) {
@@ -26,6 +21,7 @@ export async function GET(request: NextRequest,  { params }: { params: { id: str
   }
 }
 export async function PUT(request: NextRequest, response:NextResponse ,next: NextResponse,{ params }: { params: { id: string } }) {
+  
   const { id } = params;
   await connect();
  
