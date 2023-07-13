@@ -22,7 +22,7 @@ const ChangeStatus = ({ params }: any) => {
     console.log("Selected status:", status);
     try {
       const response = await axios.put(
-        `http://localhost:3000/api/editstatus/${params.id}`,
+        `https://stamurai-assignment-todo-app.vercel.app/editstatus/${params.id}`,
         payload
       );
       toast.success("Status Changed successfully");
